@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Divine Flood - History Spammer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #0f0f0f 100%);
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: #0f0f0f;
+      border: 2px solid #6a4c93;
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 0 40px rgba(106, 76, 147, 0.3);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .title {
+      font-size: 48px;
+      font-weight: 900;
+      background: linear-gradient(90deg, #d4af37 0%, #6a4c93 50%, #d4af37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #999;
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+
+    .divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #6a4c93, transparent);
+      margin: 25px 0;
+    }
+
+    .section {
+      margin-bottom: 25px;
+    }
+
+    .label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #d4af37;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .urls-box {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #00d4aa;
+      line-height: 1.6;
+      word-break: break-all;
+    }
+
+    .urls-box::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .urls-box::-webkit-scrollbar-track {
+      background: #0f0f0f;
+    }
+
+    .urls-box::-webkit-scrollbar-thumb {
+      background: #6a4c93;
+      border-radius: 4px;
+    }
+
+    .urls-box::-webkit-scrollbar-thumb:hover {
+      background: #d4af37;
+    }
+
+    .cycles-input,
+    .speed-slider {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .cycles-input {
+      margin-bottom: 15px;
+    }
+
+    .cycles-input:focus {
+      outline: none;
+      border-color: #6a4c93;
+      box-shadow: 0 0 12px rgba(106, 76, 147, 0.3);
+    }
+
+    .speed-slider {
+      cursor: pointer;
+      accent-color: #d4af37;
+      padding: 8px;
+      height: 40px;
+    }
+
+    .speed-slider::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #d4af37;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+
+    .speed-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #d4af37;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+
+    .speed-display {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    .speed-value {
+      color: #d4af37;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-start {
+      background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
+      color: #000;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    }
+
+    .btn-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+    }
+
+    .btn-start:active {
+      transform: translateY(0);
+    }
+
+    .btn-start:disabled {
+      background: #666;
+      color: #999;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .btn-stop {
+      background: #6a4c93;
+      color: #fff;
+      border: 1px solid #8a6cb3;
+    }
+
+    .btn-stop:hover {
+      background: #8a6cb3;
+      transform: translateY(-2px);
+    }
+
+    .btn-stop:active {
+      transform: translateY(0);
+    }
+
+    .btn-stop:disabled {
+      background: #333;
+      color: #666;
+      cursor: not-allowed;
+      transform: none;
+      border-color: #333;
+    }
+
+    .status {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #1a1a1a;
+      border-left: 3px solid #6a4c93;
+      font-size: 13px;
+      min-height: 20px;
+      color: #ccc;
+    }
+
+    .status.active {
+      border-left-color: #d4af37;
+      color: #d4af37;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .info {
+      margin-top: 20px;
+      padding: 12px;
+      background: rgba(106, 76, 147, 0.1);
+      border: 1px solid rgba(106, 76, 147, 0.3);
+      border-radius: 8px;
+      font-size: 12px;
+      color: #999;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 25px;
+      }
+
+      .title {
+        font-size: 36px;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .urls-box {
+        max-height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="title">Divine Flood</div>
+    <div class="subtitle">History Spammer</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <label class="label">📋 URLs to Flood</label>
+    <div class="urls-box" id="urlsBox">Loading URLs...</div>
+  </div>
+
+  <div class="section">
+    <label class="label">🔄 Cycles</label>
+    <input type="number" class="cycles-input" id="cyclesInput" value="100" min="1" max="10000">
+  </div>
+
+  <div class="section">
+    <label class="label">⚡ Speed (Delay per Entry)</label>
+    <input type="range" class="speed-slider" id="speedSlider" min="0" max="1000" value="50">
+    <div class="speed-display">
+      <span>0ms</span>
+      <span class="speed-value"><span id="speedValue">50</span>ms</span>
+      <span>1000ms</span>
+    </div>
+  </div>
+
+  <div class="button-group">
+    <button class="btn btn-start" id="startBtn">Start Flood</button>
+    <button class="btn btn-stop" id="stopBtn" disabled>Stop</button>
+  </div>
+
+  <div class="status" id="status">Ready to flood</div>
+
+  <div class="info">
+    ⚠️ <strong>Note:</strong> This tool modifies your browser history. Use responsibly. Stop the flood at any time by clicking the Stop button.
+  </div>
+</div>
+
+<script>
+  // ===== Configuration =====
+  const CONFIG = {
+    urlsFile: '/urls.txt',
+    faviconFolder: '/favicons',
+    maxFavicons: 20
+  };
+
+  // ===== DOM Elements =====
+  const urlsBox = document.getElementById('urlsBox');
+  const cyclesInput = document.getElementById('cyclesInput');
+  const speedSlider = document.getElementById('speedSlider');
+  const speedValue = document.getElementById('speedValue');
+  const startBtn = document.getElementById('startBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const status = document.getElementById('status');
+
+  // ===== State =====
+  let isRunning = false;
+  let allUrls = [];
+
+  // ===== Utilities =====
+  function updateSpeedDisplay() {
+    speedValue.textContent = speedSlider.value;
+  }
+
+  function updateStatus(message, isActive = false) {
+    status.textContent = message;
+    status.classList.toggle('active', isActive);
+  }
+
+  function getCurrentFavicon() {
+    const link = document.querySelector('link[rel~="icon"]') || document.querySelector('link[rel="shortcut icon"]');
+    return link ? link.href : null;
+  }
+
+  function setDocumentFavicon(href) {
+    if (!href) return;
+    let link = document.querySelector('link[rel="icon"]');
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.head.appendChild(link);
+    }
+    link.href = href;
+
+    let sc = document.querySelector('link[rel="shortcut icon"]');
+    if (!sc) {
+      sc = document.createElement('link');
+      sc.rel = 'shortcut icon';
+      document.head.appendChild(sc);
+    }
+    sc.href = href;
+  }
+
+  function waitForImageLoad(url, timeout = 300) {
+    return new Promise((resolve) => {
+      if (!url) return resolve(false);
+      const img = new Image();
+      let done = false;
+      const t = setTimeout(() => {
+        if (!done) { done = true; resolve(false); }
+      }, timeout);
+      img.onload = () => { if (!done) { done = true; clearTimeout(t); resolve(true); } };
+      img.onerror = () => { if (!done) { done = true; clearTimeout(t); resolve(false); } };
+      try { img.crossOrigin = 'anonymous'; } catch (e) {}
+      img.src = url;
+      if (img.complete) {
+        if (!done) { done = true; clearTimeout(t); resolve(true); }
+      }
+    });
+  }
+
+  function extractDomain(url) {
+    try {
+      const u = new URL(url);
+      return u.hostname || 'unknown';
+    } catch (e) {
+      return url.split('/')[0] || 'unknown';
+    }
+  }
+
+  async function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  // ===== Load URLs =====
+  async function loadUrls() {
+    try {
+      const response = await fetch(CONFIG.urlsFile + '?nocache=' + Date.now());
+      if (response.ok) {
+        const text = await response.text();
+        allUrls = text
+          .split(/\r?\n/)
+          .map(line => line.trim())
+          .filter(line => line.length > 0);
+        
+        urlsBox.textContent = allUrls.join('\n');
+        updateStatus(`✓ Loaded ${allUrls.length} URLs`);
+      } else {
+        urlsBox.textContent = 'Error loading urls.txt';
+        updateStatus('❌ Failed to load urls.txt');
+      }
+    } catch (e) {
+      console.error('Failed to load URLs:', e);
+      urlsBox.textContent = 'Error: ' + e.message;
+      updateStatus('❌ Error loading URLs');
+    }
+  }
+
+  // ===== Main Flood Function =====
+  async function startFlood() {
+    if (!allUrls.length) {
+      alert('No URLs loaded. Please check urls.txt');
+      return;
+    }
+
+    isRunning = true;
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+
+    const cycles = parseInt(cyclesInput.value, 10);
+    const delay = parseInt(speedSlider.value, 10);
+    const originalTitle = document.title;
+    const originalFavicon = getCurrentFavicon();
+
+    let totalPushed = 0;
+
+    try {
+      for (let cycle = 1; cycle <= cycles && isRunning; cycle++) {
+        updateStatus(`Flooding... Cycle ${cycle}/${cycles} (${totalPushed} entries)`, true);
+
+        for (let i = 0; i < allUrls.length && isRunning; i++) {
+          const url = allUrls[i];
+          const faviconIndex = (i % CONFIG.maxFavicons) + 1;
+          const faviconPath = `${CONFIG.faviconFolder}/favicon-${faviconIndex}.png`;
+
+          try {
+            // Extract domain for title
+            const domain = extractDomain(url);
+            document.title = domain;
+
+            // Set favicon
+            setDocumentFavicon(faviconPath);
+            await waitForImageLoad(faviconPath, 200);
+
+            // Add small delay for browser to register changes
+            await sleep(20);
+
+            // Push history state
+            const queryPath = `/?u=${encodeURIComponent(url)}&c=${cycle}&i=${i}`;
+            history.pushState({}, domain, queryPath);
+
+            totalPushed++;
+
+            // Apply speed delay
+            if (delay > 0) {
+              await sleep(delay);
+            }
+          } catch (e) {
+            console.error('Error processing URL:', url, e);
+          }
+
+          // Micro-yield for UI responsiveness
+          if (totalPushed % 30 === 0) {
+            await sleep(10);
+          }
+        }
+      }
+
+      // Restore original state
+      if (originalFavicon) {
+        setDocumentFavicon(originalFavicon);
+      }
+      document.title = originalTitle;
+
+      if (isRunning) {
+        updateStatus(`✓ Flood complete! ${totalPushed} entries pushed.`);
+      } else {
+        updateStatus(`⏹️ Flood stopped. ${totalPushed} entries pushed.`);
+      }
+    } catch (e) {
+      console.error('Flood error:', e);
+      updateStatus(`❌ Error: ${e.message}`);
+      if (originalFavicon) {
+        setDocumentFavicon(originalFavicon);
+      }
+      document.title = originalTitle;
+    } finally {
+      isRunning = false;
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+    }
+  }
+
+  // ===== Event Listeners =====
+  speedSlider.addEventListener('input', updateSpeedDisplay);
+
+  startBtn.addEventListener('click', startFlood);
+
+  stopBtn.addEventListener('click', () => {
+    isRunning = false;
+    updateStatus('Stopping flood...');
+  });
+
+  cyclesInput.addEventListener('change', () => {
+    const val = parseInt(cyclesInput.value, 10);
+    if (val < 1) cyclesInput.value = 1;
+    if (val > 10000) cyclesInput.value = 10000;
+  });
+
+  // ===== Initialize =====
+  loadUrls();
+</script>
+
+</body>
+</html>
